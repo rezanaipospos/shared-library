@@ -1,0 +1,10 @@
+// Contoh Jenkinsfile — diletakkan di ROOT repo aplikasi.
+// Dipakai oleh Multibranch Pipeline (AD-11): tiap branch (development/staging/production)
+// jadi sub-job dengan build number sendiri.
+//
+// Trigger: webhook GitHub setelah human merge ke branch target (AD-12).
+
+@Library('course-shared-library') _
+
+// Seluruh logika ada di shared library; Jenkinsfile sengaja tipis.
+containerPipeline()

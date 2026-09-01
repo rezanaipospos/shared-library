@@ -1,0 +1,27 @@
+# Contoh .cicd/pipeline.yaml — diletakkan di ROOT repo aplikasi.
+# Shared library membacanya (AD-15) sebagai pengganti puluhan env var.
+
+app_name: myapp
+language: go
+
+test:
+  command: "go test ./..."
+
+registry:
+  region: asia-southeast1
+  project_id: your-gcp-project-id
+  repository: docker-images-repo
+
+gitops:
+  repo_url: github.com/your-org/gitops.git
+  branch: main
+  path: apps/myapp/overlays/development   # lokasi kustomization overlay dev
+
+build:
+  tool: kaniko          # kaniko (default, rootless) | docker (trade-off)
+  branch: development   # hanya branch ini yang build image (build-once)
+
+slack:
+  channel: "#deployments"
+
+agent_label: "vm-jenkins"   # agent sederhana di VM (AD-16); ganti ke label K8s setelah Epic 4
